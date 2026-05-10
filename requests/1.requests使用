@@ -1,0 +1,7 @@
+r = requests.get(url)   构建一个向服务器请求资源的requests对象
+
+    requests.get(url,params=None,**kwargs)
+    url:        拟获取页面的url链接
+    params:     url中的额外参数,字典或字节流格式,可选
+    **kwargs:   12个控制访问的参数
+    

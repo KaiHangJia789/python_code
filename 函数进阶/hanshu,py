@@ -1,0 +1,132 @@
+num1 = 1#全局变量
+def fun1():
+    #global num1    告诉python，函数中使用全局变量num1
+    num1 = 100#局部变量
+    print(num1)
+
+fun1() #100
+print(num1)# 1
+#-----------------------------------------------------
+#传参方式
+def reg_stu(name,age,gender,city):
+    print(f"姓名:{name},年龄:{age},性别:{gender},城市:{city}")
+    return {"name":name,"age":age,"gender":gender,"city":city}
+
+#       位置传参，关键字传参
+stu = reg_stu(name="张三",age=18,gender="男",city="北京")
+print(stu)
+
+stu = reg_stu(gender="男",name="王武",city="上海",age="19")
+print(stu)
+
+stu = reg_stu("赵四","18","男",city="北京")#混用时，位置在前，关键字在后
+print(stu)
+#-----------------------------------------------------------
+#默认参数
+
+#默认参数必须放在无默认值的参数的后面
+def reg_stu(name,age,gender,city="北京"):#默认city=北京
+    print(f"姓名:{name},年龄:{age},性别:{gender},城市:{city}")
+    return {"name":name,"age":age,"gender":gender,"city":city}
+
+#       位置传参，关键字传参
+stu = reg_stu(name="张三",age=18,gender="男")
+print(stu)
+
+stu = reg_stu(gender="男",name="王武",age="19",city="上海")
+print(stu)
+#----------------------------------------------------------------------
+#不定长参数-位置传递(*args)
+#   注意传递的所有匹配的位置参数都会被args变量收集
+#   并会封装为一个元组,args为元组类型(不会封装关键词参数)
+
+def cal_data(*args):
+    min_data = min(args)
+    max_data = max(args)
+    avg_data = sum(args) / len(args)
+    return min_data,max_data,round(avg_data,1)#round(avg_data,1):
+                                              #avg_data保留一位小数
+
+data = cal_data(10,20,30,40,50,60,70)
+print(data)
+
+
+#不定长参数-关键字传递(*kwargs)
+#   注意传递的所有匹配的位置参数都会被kwargs变量收集
+#   并会封装为一个字典,kwargs为字典类型(不会封装位置传递参数)
+def cal_data(*args,**kwargs):
+    min_data = min(args)
+    max_data = max(args)
+    avg_data = sum(args) / len(args)
+
+    if kwargs.get("round") is not None:
+        avg_data = round(avg_data,kwargs.get("round"))
+# get 是 Python 字典（dict）的内置方法，作用是：根据指定的键（key） 
+# 从字典中获取对应的值（value），如果这个键不存在，不会报错，
+# 而是返回一个默认值（默认是 None）。
+    
+    if kwargs.get("print"):
+        print(f"计算出的最大值:{max_data},最小值:{min_data},平均值:{avg_data}")
+    
+    return max_data,min_data,avg_data
+data = cal_data(10,20,30,40,50,60,70,round = 3,print=True)
+print(data)
+#---------------------------------------------------------------------
+#函数的参数类型:
+#普通参数:  数字，布尔，字符串，列表，元组，集合，字典
+#特殊参数:  函数
+def add(x,y):
+    return x+y
+
+def calc(x,y,oper): #oper类型为函数
+    return oper(x,y)
+
+print(calc(10,20,add))
+#-------------------------------------------------------------------------
+#匿名函数
+out_line = lambda: print("------------------------------")
+out_line()
+
+add = lambda x,y: x + y
+print(add(100,200))
+
+#按字符个数从小到大排序
+data_list = ["C++","C","Python","Java","JavaScript","Go","Rust"]
+#列表的sort()函数默认按首字母的先后顺序从大到小排列
+#key可改变他的排列标准
+#reverse=False从小到大排序,=True从大到小排序    reverse是反转的意思
+data_list.sort(key  = lambda item:len(item))
+print(data_list)
+#----------------------------------------------------------------------------
+#计算n的阶乘
+#递归
+
+def jc(n):
+    if n == 1:
+        return 1
+    else:
+        return n*jc(n-1)
+
+result = jc(10)
+print(result)
+#-------------------------------------------------------------------------------
+#类型注解
+a2: int =111
+score: float = 99.2
+hobby: str = "python"
+flag2: bool = True
+pic2: None = None
+
+names2: list[str] = ["A","B","C"]
+phone2: set[str] = ["1343546","135467678","16878545"]
+option2: dict[str,int] = {"count":2,"total":476}
+good2: tuple[str,int,int] = ("数据",500,3)
+#str|int:类型为str或int
+names2: list[str|int] = ["A","B","C"]
+#----------------------------------------------------------------------------
+#函数类型注解
+def circle_area_len(r: float)->tuple[float,float]:
+    return round(3.14*r*r,1),round(2*3.14*r,1)
+
+al = circle_area_len(8.5)
+print(al)
