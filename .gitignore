@@ -1,0 +1,16 @@
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+*.pdf
+*.mp4
+*.png
+*.jpg
+*.jpeg
+*.db
+*.sqlite3
+.env
+session/
+data/
+out.mp4
+chat_history.json
